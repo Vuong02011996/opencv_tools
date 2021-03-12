@@ -2,24 +2,36 @@ import cv2
 import numpy as np
 
 # Create a VideoCapture object
-cap = cv2.VideoCapture('/home/vuong/Videos/VIDEOS/crop3_head_track.mp4')
+cap = cv2.VideoCapture('/home/vuong/Videos/PreSchool/Lyu You Lin.mp4')
 POSITION_LINE = 0.75
 # Check if camera opened successfully
-if (cap.isOpened() == False):
+if cap.isOpened() is False:
     print("Unable to read camera feed")
 
 # Default resolutions of the frame are obtained.The default resolutions are system dependent.
 # We convert the resolutions from float to integer.
-frame_width = int(cap.get(3))
-frame_height = int(cap.get(4))
+frame_width = 416
+frame_height = 416
 num_of_frame = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+print("num_of_frame", num_of_frame)
 # Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
-out = cv2.VideoWriter('/home/vuong/Videos/VIDEOS/crop3_head_track_frame_index.mp4', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (frame_width, frame_height))
+out = cv2.VideoWriter('/home/vuong/Videos/test.mp4', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (frame_width, frame_height))
 index = 0
-while (True):
+rotation = False
+while True:
     index += 1
+    print(index)
+    if index == int(num_of_frame):
+        break
     # cap.set(cv2.CAP_PROP_POS_FRAMES, index)
     ret, frame = cap.read()
+    rows, cols , channel= frame.shape
+    frame = cv2.transpose(frame)
+    # # cols-1 and rows-1 are the coordinate limits.
+    # if rotation:
+    #     M = cv2.getRotationMatrix2D((cols / 2.0, rows / 2.0), -90, 0.5)
+    #     dst = cv2.warpAffine(frame, M, (cols, rows))
+    #     frame = dst
 
     if ret is False:
         continue
@@ -33,19 +45,15 @@ while (True):
     (H, W) = frame.shape[:2]
     cv2.putText(frame, text, (5, H - (H-30)),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-    out.write(frame)
+    # out.write(frame)
     # cv2.imwrite('cauvuot.jpg', frame)
 
     # Display the resulting frame
-    # cv2.imshow('frame', frame)
-
-    print(index)
-    if index == int(num_of_frame):
-        break
-
+    # cv2.resize(frame, (frame_width, frame_height))
+    cv2.imshow('frame', frame)
     # Press Q on keyboard to stop recording
-    # if cv2.waitKey(1) & 0xFF == ord('q'):
-    #     break
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
     # Break the loop
     # else:
