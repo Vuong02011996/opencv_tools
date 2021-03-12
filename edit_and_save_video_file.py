@@ -25,7 +25,7 @@ while True:
         break
     # cap.set(cv2.CAP_PROP_POS_FRAMES, index)
     ret, frame = cap.read()
-    rows, cols , channel= frame.shape
+    rows, cols ,channel = frame.shape
     frame = cv2.transpose(frame)
     # # cols-1 and rows-1 are the coordinate limits.
     # if rotation:
