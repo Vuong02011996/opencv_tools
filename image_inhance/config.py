@@ -1,0 +1,1 @@
+path_image = "/home/vuong/Downloads/dark_images_and_enhancement/z2487266498351_78b28a538a87a32dc8707db9b2fc0409.jpg"
